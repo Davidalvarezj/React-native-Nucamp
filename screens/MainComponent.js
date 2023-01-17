@@ -10,9 +10,16 @@ import {
 } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
 import logo from "../assets/images/logo.png";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
 import HomeScreen from "./HomeScreen";
 import AboutScreen from "./AboutScreen";
 import ContactScreen from "./ContactScreen";
+import { fetchCampsites } from "../features/campsites/campsitesSlice";
+import { fetchPartners } from "../features/partners/partnersSlice";
+import { fetchPromotions } from "../features/promotions/promotionsSlice";
+import { fetchComments } from "../features/comments/commentsSlice";
 
 const Drawer = createDrawerNavigator();
 
@@ -141,6 +148,15 @@ const CustomDrawerContent = (props) => (
 );
 
 const Main = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCampsites());
+    dispatch(fetchPartners());
+    dispatch(fetchPromotions());
+    dispatch(fetchComments());
+  }, [dispatch]);
+
   return (
     <View
       style={{

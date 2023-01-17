@@ -2,9 +2,9 @@ import { View, Text } from "react-native";
 import React from "react";
 import { ScrollView } from "react-native";
 import { Card } from "react-native-elements";
-import { PARTNERS } from "../shared/partners";
-import { useState } from "react";
 import { ListItem, Avatar } from "react-native-elements";
+import { useSelector } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
 
 const Mission = () => {
   return (
@@ -25,7 +25,7 @@ const Mission = () => {
 };
 
 export default function AboutScreen() {
-  const [partners, setPartners] = useState(PARTNERS);
+  const partners = useSelector((state) => state.partners);
   console.log("partners:", partners);
 
   return (
@@ -34,10 +34,10 @@ export default function AboutScreen() {
       <Card>
         <Card.Title>Community Partners</Card.Title>
         <Card.Divider />
-        {partners.map((elm) => {
+        {partners.partnersArray.map((elm) => {
           return (
             <ListItem key={elm.id}>
-              <Avatar source={elm.image} rounded />
+              <Avatar source={{ uri: baseUrl + elm.image }} rounded />
               <ListItem.Content>
                 <ListItem.Title>{elm.name}</ListItem.Title>
                 <ListItem.Subtitle>{elm.description}</ListItem.Subtitle>
