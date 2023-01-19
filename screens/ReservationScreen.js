@@ -6,6 +6,7 @@ import {
   Switch,
   Button,
   Platform,
+  Modal,
 } from "react-native";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -16,6 +17,7 @@ export default function ReservationScreen() {
   const [hikeIn, setHikeIn] = useState(false);
   const [date, setDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -25,6 +27,10 @@ export default function ReservationScreen() {
 
   const handleReservation = () => {
     console.log(campers, hikeIn, date, showCalendar);
+    setShowModal(!showModal);
+  };
+
+  const resetForm = () => {
     setCampers(1);
     setHikeIn(false);
     setDate(new Date());
@@ -82,6 +88,31 @@ export default function ReservationScreen() {
           accessibilityLabel="Tap me to search"
         />
       </View>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={showModal}
+        onRequestClose={() => setShowModal(!showModal)}
+      >
+        <View style={styles.modal}>
+          <Text style={styles.modalTitle}>Search Campsite Reservations </Text>
+          <Text style={styles.modalText}>Number of Campers: {campers} </Text>
+          <Text style={styles.modalText}>
+            Hike-In?: {hikeIn ? "Yes" : "No"}
+          </Text>
+          <Text style={styles.modalText}>
+            Date: {date.toLocaleDateString("en-US")}
+          </Text>
+          <Button
+            color="#5637DD"
+            title="Closed"
+            onPress={() => {
+              setShowModal(!showModal);
+              resetForm();
+            }}
+          />
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
@@ -100,5 +131,21 @@ const styles = StyleSheet.create({
   },
   formItem: {
     flex: 1,
+  },
+  modal: {
+    justifyContent: "center",
+    margin: 20,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    backgroundColor: "#5637DD",
+    textAlign: "center",
+    color: "#fff",
+    marginBottom: 20,
+  },
+  modalText: {
+    fontSize: 18,
+    margin: 10,
   },
 });
