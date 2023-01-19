@@ -24,9 +24,7 @@ const RenderCampsite = ({ campsite, isFavorite, markFavorite }) => {
           name={isFavorite ? "heart" : "heart-o"}
           type="font-awesome"
           color="#f50"
-          size={20}
-          raised
-          reverse
+          size={25}
           onPress={() => markFavorite()}
         />
       </Card>
@@ -40,6 +38,7 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     marginBottom: 20,
+    paddingBottom: 30,
   },
 });
 

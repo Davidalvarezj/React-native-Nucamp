@@ -5,6 +5,7 @@ import { Card } from "react-native-elements";
 import { ListItem, Avatar } from "react-native-elements";
 import { useSelector } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import LoadingComponent from "../components/LoadingComponent";
 
 const Mission = () => {
   return (
@@ -26,7 +27,31 @@ const Mission = () => {
 
 export default function AboutScreen() {
   const partners = useSelector((state) => state.partners);
-  console.log("partners:", partners);
+
+  if (partners.isLoading) {
+    return (
+      <ScrollView>
+        <Mission />
+        <Card>
+          <Card.Title>Community Partners</Card.Title>
+          <Card.Divider />
+          <LoadingComponent />
+        </Card>
+      </ScrollView>
+    );
+  }
+  if (partners.errMess) {
+    return (
+      <ScrollView>
+        <Mission />
+        <Card>
+          <Card.Title>Community Partners</Card.Title>
+          <Card.Divider />
+          <Text>{partners.errMess}</Text>
+        </Card>
+      </ScrollView>
+    );
+  }
 
   return (
     <ScrollView>
