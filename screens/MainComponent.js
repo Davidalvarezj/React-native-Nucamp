@@ -16,6 +16,7 @@ import ReservationScreen from "./ReservationScreen";
 import HomeScreen from "./HomeScreen";
 import AboutScreen from "./AboutScreen";
 import ContactScreen from "./ContactScreen";
+import FavoriteScreen from "./FavoriteScreen";
 import { fetchCampsites } from "../features/campsites/campsitesSlice";
 import { fetchPartners } from "../features/partners/partnersSlice";
 import { fetchPromotions } from "../features/promotions/promotionsSlice";
@@ -107,6 +108,29 @@ const ReservationNavigator = () => {
           headerLeft: () => (
             <Icon
               name="tree"
+              type="font-awesome"
+              iconStyle={styles.stackIcon}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const FavoritesNavigator = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="Favorites"
+        component={FavoriteScreen}
+        options={({ navigation }) => ({
+          title: "Favorite Campsites",
+          headerLeft: () => (
+            <Icon
+              name="heart"
               type="font-awesome"
               iconStyle={styles.stackIcon}
               onPress={() => navigation.toggleDrawer()}
@@ -265,6 +289,22 @@ const Main = () => {
             drawerIcon: ({ color }) => (
               <Icon
                 name="tree"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Favorites"
+          component={FavoritesNavigator}
+          options={{
+            title: "My favorites",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="heart"
                 type="font-awesome"
                 size={24}
                 iconStyle={{ width: 24 }}
